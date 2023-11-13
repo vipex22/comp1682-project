@@ -1,14 +1,14 @@
 import React from "react";
 import { Cart, Logo, UserAvatar } from "../assets/index";
-
+import {Link} from "react-router-dom";
 const Header = () => {
   return (
-    <div className="w-full h-20 bg-black">
-      <div className="max-w-screen-xl h-full mx-auto flex items-center justify-between font-titleFont">
+    <div className="w-full h-20 bg-black sticky top-0 z-50">
+      <div className="max-w-screen-xl h-full mx-auto flex items-center justify-between font-titleFont ">
         <div>
           <ul className="flex gap-8 items-center">
             <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
-              Home
+              <Link to={"/"}>Home</Link>
             </li>
             <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
               Products
