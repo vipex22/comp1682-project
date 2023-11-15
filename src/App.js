@@ -2,15 +2,17 @@ import React from "react";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ProductDetail from "./components/ProductDetail";
 import Contact from "./pages/Contact";
 import { createBrowserRouter, Outlet, RouterProvider, ScrollRestoration } from "react-router-dom";
-import { productData, categoryData } from "./api/Api";
+import { productData } from "./api/Api";
 
 
 const Layout = ()=> {
   return (
     <div>
       <Header/>
+      <ScrollRestoration/>
       <Outlet/>
       <Footer/>
     </div>
@@ -25,7 +27,11 @@ const router = createBrowserRouter ([
       {
         path:"/",
         element:<Home/>,
-        loader:productData,categoryData,
+        loader:productData,
+      },
+      {
+        path:"/product/:id",
+        element:<ProductDetail/>
       },
       {
         path:"/contact",

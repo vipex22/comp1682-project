@@ -1,6 +1,6 @@
 import React from "react";
 import { Cart, Logo, UserAvatar } from "../assets/index";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <div className="w-full h-20 bg-black sticky top-0 z-50">
@@ -16,7 +16,9 @@ const Header = () => {
           </ul>
         </div>
         <div>
-          <img className="w-28" src={Logo} alt="logo"></img>
+          <Link>
+            <img className="w-28" src={Logo} alt="logo"></img>
+          </Link>
         </div>
 
         <div className="flex gap-8 items-center">

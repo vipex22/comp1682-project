@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Slider from "../components/Slider";
 import Products from "../components/Products";
-import ByStyle from "../components/ByStyle";
 import { useLoaderData } from "react-router-dom";
 
 const Home = () => {
@@ -15,7 +14,6 @@ const Home = () => {
     <div>
       <Slider />
       <Products products={products} />
-      <ByStyle/>
     </div>
   );
 };

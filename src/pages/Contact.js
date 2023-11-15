@@ -3,7 +3,7 @@ import { GWlogo } from "../assets";
 
 const Contact = () => {
   return (
-    <div className="py-10 min-h-screen">
+    <div className="py-10 min-h-[600px]">
       <div className="max-w-screen-xl mx-auto text-3xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
         Contact
       </div>
