@@ -10,15 +10,49 @@ export const slice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const item = state.productData.find((item) => item.productId === action.payload.productId);
+      const item = state.productData.find(
+        (item) => item.productId === action.payload.productId
+      );
       if (item) {
         item.productQuantity += action.payload.productQuantity;
       } else {
         state.productData.push(action.payload);
       }
     },
+    deleteProduct: (state, action) => {
+      state.productData = state.productData.filter(
+        (item) => item.productId !== action.payload
+      );
+    },
+    clearCart: (state) => {
+      state.productData = [];
+    },
+    increaseQuantity: (state, action) => {
+      const item = state.productData.find(
+        (item) => item.productId === action.payload.productId
+      );
+      if (item) {
+        item.productQuantity++;
+      }
+    },
+    decreaseQuantity: (state, action) => {
+      const item = state.productData.find(
+        (item) => item.productId === action.payload.productId
+      );
+      if (item.productQuantity === 1) {
+        item.productQuantity = 1;
+      } else {
+        item.productQuantity--;
+      }
+    },
   },
 });
 
-export const { addToCart } = slice.actions;
+export const {
+  addToCart,
+  deleteProduct,
+  clearCart,
+  increaseQuantity,
+  decreaseQuantity,
+} = slice.actions;
 export default slice.reducer;

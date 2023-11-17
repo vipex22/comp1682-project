@@ -1,9 +1,47 @@
-import React from 'react'
+import React from "react";
+import { useState, useEffect } from "react";
+import CartItem from "../components/CartItem";
+import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
+  const productData = useSelector((state)=> state.Cart.productData)
+  const [totalPrice, setTotalPrice] = useState();
+  useEffect(()=>{
+    let total = 0;
+    productData.map((item)=>{
+      total += item.productPrice * item.productQuantity;
+      return total
+    });
+    setTotalPrice(total);
+  },[productData])
   return (
-    <div>This is your cart</div>
-  )
-}
+    <div className="max-w-screen-xl mx-auto py-20 flex">
+      <CartItem />
+      <div className="w-1/3 py-6 px-4">
+        <div className="flex flex-col gap-6 border-b-[1px] border-b-gray-400 pb-6">
+          <h2 className="text-2xl font-bold font-titleFont">Totals</h2>
+          <p className="flex items-start gap-8 text-base">
+            Address
+            <span className="text-lg font-bold font-titleFont">
+              Da Nang, Hai Chau, Ong Ich Khiem street
+            </span>
+          </p>
+        </div>
+        <p className="font-semibold flex justify-between mt-6 font-titleFont">
+          Total payment <span className="text-xl font-bold">$ {totalPrice}</span>
+        </p>
+        <button className="bg-red-500 text-white w-full py-3 mt-5 active:bg-red-500 hover:bg-red-400">
+          Purchase
+        </button>
+      </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        theme="light"
+      />
+    </div>
+  );
+};
 
-export default Cart
+export default Cart;
