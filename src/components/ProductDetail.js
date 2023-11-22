@@ -66,7 +66,10 @@ const ProductDetail = () => {
                     productDes: details.description,
                     productQuantity: Quantity,
                   })
-                ) & toast.success(`${Quantity} ${details.title} added to your shopping cart!`)
+                ) &
+                toast.success(
+                  `${Quantity} ${details.title} added to your shopping cart!`
+                )
               }
               className="bg-red-500 text-white py-3 px-6 active:bg-red-500 hover:bg-red-400 rounded-full"
             >
@@ -75,11 +78,7 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        theme="light"
-      />
+      <ToastContainer position="top-right" autoClose={5000} theme="light" />
     </div>
   );
 };

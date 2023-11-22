@@ -4,7 +4,7 @@ import CartItem from "../components/CartItem";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {Cart2} from "../assets/index";
+import { Cart2 } from "../assets/index";
 const Cart = () => {
   const productData = useSelector((state) => state.Cart.productData);
   console.log("product amount: ", productData.length);

@@ -11,7 +11,6 @@ import {
   RouterProvider,
   ScrollRestoration,
 } from "react-router-dom";
-import { productData } from "./api/Api";
 
 const Layout = () => {
   return (
@@ -32,7 +31,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: productData,
       },
       {
         path: "/product/:id",

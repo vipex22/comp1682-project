@@ -5,15 +5,18 @@ const ProductItem = ({ product }) => {
   const Navigate = useNavigate();
   const productId = product.id;
   const showDetail = () => {
-    Navigate(`/product/${productId}`,{
-      state:{
+    Navigate(`/product/${productId}`, {
+      state: {
         items: product,
       },
     });
   };
   return (
     <div className="group border-[1px] mx-4 my-4">
-      <div onClick={showDetail} className="w-full h-80 cursor-pointer overflow-hidden ">
+      <div
+        onClick={showDetail}
+        className="w-full h-80 cursor-pointer overflow-hidden "
+      >
         <img
           className="w-30 h-30 px-4 py-4 object-cover group-hover:scale-110 duration-75"
           src={product.image}
@@ -23,7 +26,9 @@ const ProductItem = ({ product }) => {
       <div className="w-full px-2 py-4">
         <div className="flex justify-between">
           <div>
-            <h2 className="text-sm font-titleFont ">{product.title.substring(0,20)}</h2>
+            <h2 className="text-sm font-titleFont ">
+              {product.title.substring(0, 20)}
+            </h2>
           </div>
           <div className="text-sm font-bold">
             <p>${product.price}</p>
