@@ -1,9 +1,21 @@
-import React from "react";
-import { Cart, Logo, UserAvatar } from "../assets/index";
+// Header.js
+import React, { useState, useEffect } from "react";
+import { Cart, Logo } from "../assets/index";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { auth } from "../firebase";
+
 const Header = () => {
   const productInCart = useSelector((state) => state.Cart.productData);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="w-full h-20 bg-black sticky top-0 z-50">
@@ -33,10 +45,27 @@ const Header = () => {
               </span>
             </div>
           </Link>
-          <p1 className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
-            Register/Login
-          </p1>
-          {/* <img className="w-8 h-8 rounded-full" src={UserAvatar} alt="userLogo"></img> */}
+
+          {user ? (
+            <div className="flex items-center">
+              <p className="text-white text-xl mr-2">
+                {user.displayName || "User"}
+              </p>
+              <Link to="/profile">
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src={user.photoURL}
+                  alt="userLogo"
+                />
+              </Link>
+            </div>
+          ) : (
+            <Link to="/login">
+              <p1 className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
+                Login
+              </p1>
+            </Link>
+          )}
         </div>
       </div>
     </div>

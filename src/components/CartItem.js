@@ -82,7 +82,7 @@ const CartItem = () => {
                 </button>
               </div>
             </div>
-            <p className="w-14">${item.productQuantity * item.productPrice}</p>
+            <p className="w-14">${(item.productQuantity * item.productPrice).toFixed(2)}</p>
             <RiDeleteBackLine
               onClick={() =>
                 Dispatch(deleteProduct(item.productId)) &
