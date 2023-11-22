@@ -3,12 +3,16 @@ import { GoogleIcon, ShopVerticalImg } from "../assets";
 import { auth } from "../firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
+
+    provider.setCustomParameters({ prompt: 'select_account' });
+
     try {
       const result = await signInWithPopup(auth, provider);
       console.log(result.user);
@@ -45,6 +49,7 @@ const Login = () => {
           />
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={5000} theme="light" />
     </div>
   );
 };
