@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth, firestore } from "../firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Profile = () => {
@@ -87,7 +87,7 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate('/login');
+      navigate("/login");
       toast.success("Log out successfully!");
     } catch (error) {
       console.error("Error signing out:", error);
@@ -208,7 +208,6 @@ const Profile = () => {
           <h2 className="max-w-screen-xl mx-auto text-3xl py-10 font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
             Orders
           </h2>
-          
         </div>
       ) : (
         <div className="max-w-screen-xl mx-auto py-20 items-center flex flex-col justify-center">

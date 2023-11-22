@@ -5,7 +5,31 @@ import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Cart2 } from "../assets/index";
+import { auth, firestore } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 const Cart = () => {
+  const [userAddress, setUserAddress] = useState("");
+
+  useEffect(() => {
+    const getUserDetails = async () => {
+      if (auth.currentUser) {
+        const userId = auth.currentUser.uid;
+        const docRef = doc(firestore, "users", userId);
+
+        try {
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            setUserAddress(docSnap.data().address || "");
+          }
+        } catch (error) {
+          console.error("Error getting user details:", error);
+        }
+      }
+    };
+
+    getUserDetails();
+  }, []);
   const productData = useSelector((state) => state.Cart.productData);
   console.log("product amount: ", productData.length);
   const [totalPrice, setTotalPrice] = useState();
@@ -44,7 +68,7 @@ const Cart = () => {
             <p className="flex items-start gap-8 text-base">
               Address
               <span className="text-lg font-bold font-titleFont">
-                Da Nang, Hai Chau, Ong Ich Khiem street
+              {userAddress || "N/A"}
               </span>
             </p>
           </div>
