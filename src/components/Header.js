@@ -25,9 +25,11 @@ const Header = () => {
             <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
               <Link to={"/"}>Home</Link>
             </li>
-            <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
-              Products
-            </li>
+            <Link to="/products">
+              <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
+                Products
+              </li>
+            </Link>
           </ul>
         </div>
         <div>

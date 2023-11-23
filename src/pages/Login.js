@@ -36,10 +36,7 @@ const Login = () => {
             <img src={GoogleIcon} alt="img" class="w-6 h-6 inline mr-2" />
             Sign in with Google
           </button>
-          <div class="text-center text-gray-500">
-            Don't have an account?
-            <span class="font-bold text-black"> Sign up</span>
-          </div>
+          
         </div>
         <div class="relative">
           <img

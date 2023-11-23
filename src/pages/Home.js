@@ -1,12 +1,12 @@
 import React from "react";
 import Slider from "../components/Slider";
-import Products from "../components/Products";
+import Trending from "../components/Trending";
 
 const Home = () => {
   return (
     <div>
       <Slider />
-      <Products />
+      <Trending />
     </div>
   );
 };

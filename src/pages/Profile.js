@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [phoneNumberError, setPhoneNumberError] = useState("");
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
@@ -15,7 +16,14 @@ const Profile = () => {
     sex: "",
     dob: "",
   });
-
+  const formatDateForDisplay = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+  };
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -24,7 +32,7 @@ const Profile = () => {
           phoneNumber: await getUserDetail(user.uid, "phoneNumber"),
           address: await getUserDetail(user.uid, "address"),
           sex: await getUserDetail(user.uid, "sex"),
-          dob: await getUserDetail(user.uid, "dob"),
+          dob: formatDateForDisplay(await getUserDetail(user.uid, "dob")),
         });
       }
     });
@@ -63,10 +71,11 @@ const Profile = () => {
 
   const handleSaveClick = async () => {
     try {
+      const formattedDate = new Date(formData.dob).toLocaleDateString('en-US');
       await updateUserDetail(user.uid, "phoneNumber", formData.phoneNumber);
       await updateUserDetail(user.uid, "address", formData.address);
       await updateUserDetail(user.uid, "sex", formData.sex);
-      await updateUserDetail(user.uid, "dob", formData.dob);
+      await updateUserDetail(user.uid, "dob", formattedDate);
 
       setEditMode(false);
     } catch (error) {
@@ -76,7 +85,20 @@ const Profile = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (["phoneNumber", "address", "sex", "dob"].includes(name)) {
+
+    if (name === "phoneNumber") {
+      const phoneNumberRegex = /^\d+$/;
+
+      if (value === "" || phoneNumberRegex.test(value)) {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+        setPhoneNumberError("");
+      } else {
+        setPhoneNumberError("Phone number must contain only numbers.");
+      }
+    } else if (["address", "sex", "dob"].includes(name)) {
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
@@ -135,7 +157,9 @@ const Profile = () => {
                 <strong>Phone Number: </strong>
                 {editMode ? (
                   <input
-                    className="border-2 border-gray-400"
+                    className={`border-2 border-gray-400 ${
+                      phoneNumberError ? "border-red-500" : ""
+                    }`}
                     type="text"
                     name="phoneNumber"
                     value={formData.phoneNumber}
@@ -143,6 +167,9 @@ const Profile = () => {
                   />
                 ) : (
                   formData.phoneNumber || "N/A"
+                )}
+                {phoneNumberError && (
+                  <p className="text-red-500 text-sm">{phoneNumberError}</p>
                 )}
               </div>
               <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
@@ -162,13 +189,16 @@ const Profile = () => {
               <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
                 <strong>Sex: </strong>
                 {editMode ? (
-                  <input
+                  <select
                     className="border-2 border-gray-400"
-                    type="text"
                     name="sex"
                     value={formData.sex}
                     onChange={handleInputChange}
-                  />
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="N/A">N/A</option>
+                  </select>
                 ) : (
                   formData.sex || "N/A"
                 )}
@@ -178,13 +208,13 @@ const Profile = () => {
                 {editMode ? (
                   <input
                     className="border-2 border-gray-400"
-                    type="text"
+                    type="date"
                     name="dob"
                     value={formData.dob}
                     onChange={handleInputChange}
                   />
                 ) : (
-                  formData.dob || "N/A"
+                  formatDateForDisplay(formData.dob) || "N/A"
                 )}
               </div>
 

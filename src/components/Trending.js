@@ -15,13 +15,18 @@ const Products = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        setProducts(productsData);
+        const shuffledProducts = productsData.sort(() => Math.random() - 0.5);
+        //can change slice to how many products I want
+        const selectedProducts = shuffledProducts.slice(0, 4);
+
+        setProducts(selectedProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
     };
     fetchProducts();
   }, []);
+
   return (
     <div className="pt-10">
       <div className="max-w-screen-xl mx-auto text-7xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
