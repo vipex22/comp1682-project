@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
 import ProductItem from "../components/ProductItem";
 import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "../firebase";
@@ -44,9 +43,10 @@ const Products = () => {
       <div className="pt-10 max-w-screen-xl mx-auto grid grid-cols-4">
         {products
           .filter((item) => {
-            return searchTerm.toLowerCase() === ""
+            return searchTerm.trim() === "" ||
+              item.title.toLowerCase().includes(searchTerm.toLowerCase())
               ? item
-              : item.title.toLowerCase().includes(searchTerm);
+              : null;
           })
           .map((item) => (
             <ProductItem key={item.id} product={item} />
