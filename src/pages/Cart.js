@@ -7,9 +7,15 @@ import { Link } from "react-router-dom";
 import { Cart2 } from "../assets/index";
 import { auth, firestore } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
+import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
+
 const Cart = () => {
   const [userAddress, setUserAddress] = useState("");
-
+  const [userEmail, setUserEmail] = useState("");
+  const [userPhoneNumber, setUserPhoneNumber] = useState("");
+  const [payWithStripe, setPayWithStripe] = useState(false);
   useEffect(() => {
     const getUserDetails = async () => {
       if (auth.currentUser) {
@@ -21,6 +27,8 @@ const Cart = () => {
 
           if (docSnap.exists()) {
             setUserAddress(docSnap.data().address || "");
+            setUserPhoneNumber(docSnap.data().phoneNumber || "");
+            setUserEmail(auth.currentUser.email || "");
           }
         } catch (error) {
           console.error("Error getting user details:", error);
@@ -41,6 +49,30 @@ const Cart = () => {
     });
     setTotalPrice(total.toFixed(2));
   }, [productData]);
+
+  const handleCheckout = () => {
+    const user = auth.currentUser;
+    if (user) {
+      setPayWithStripe(true);
+    } else {
+      toast.error("Please sign in to purchase");
+    }
+  };
+
+  const stripeToken = async (token) => {
+    const paymentDetails = {
+      amount: totalPrice * 100,
+      token: token,
+      userEmail: userEmail,
+      userPhoneNumber: userPhoneNumber,
+      userAddress: userAddress,
+      products: productData
+        .map((item) => `${item.productTitle} (${item.productQuantity})`)
+        .join(", "),
+    };
+
+    await axios.post("http://localhost:8000/paywithstripe", paymentDetails);
+  };
 
   const renderProduct = () => {
     if (productData.length === 0) {
@@ -68,7 +100,13 @@ const Cart = () => {
             <p className="flex items-start gap-8 text-base">
               Address
               <span className="text-lg font-bold font-titleFont">
-              {userAddress || "N/A"}
+                {userAddress || "N/A"}
+              </span>
+            </p>
+            <p className="flex items-start gap-8 text-base">
+              Phone Number
+              <span className="text-lg font-bold font-titleFont">
+                {userPhoneNumber || "N/A"}
               </span>
             </p>
           </div>
@@ -76,9 +114,25 @@ const Cart = () => {
             Total payment{" "}
             <span className="text-xl font-bold">$ {totalPrice}</span>
           </p>
-          <button className="bg-red-500 text-white w-full py-3 mt-5 active:bg-red-500 hover:bg-red-400">
+          <button
+            onClick={handleCheckout}
+            className="bg-red-500 text-white w-full py-3 mt-5 active:bg-red-500 hover:bg-red-400"
+          >
             Purchase
           </button>
+          {payWithStripe && (
+            <div className="mt-5 justify-center flex items-center">
+              <StripeCheckout
+                stripeKey="pk_test_51OFtylK2wvpPmzzvKfOXYImCxvl1ZpVVKRqZOBNpeycJu1e4bpT09meUrFUpl0vxcAp6mlCTa5J09XwJLqZNgrKD00KplKHOFg"
+                name="GWFashion"
+                description={`Your Payment total is $${totalPrice}`}
+                amount={totalPrice * 100}
+                label="Pay With Stripe"
+                email={userEmail}
+                token={stripeToken}
+              />
+            </div>
+          )}
         </div>
         <ToastContainer position="top-right" autoClose={5000} theme="light" />
       </div>
