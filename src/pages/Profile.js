@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { auth, firestore } from "../firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  query,
+  getDocs,
+  orderBy,
+} from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import Order from "../components/Order";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -18,10 +27,10 @@ const Profile = () => {
   });
   const formatDateForDisplay = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
     });
   };
   useEffect(() => {
@@ -71,7 +80,7 @@ const Profile = () => {
 
   const handleSaveClick = async () => {
     try {
-      const formattedDate = new Date(formData.dob).toLocaleDateString('en-US');
+      const formattedDate = new Date(formData.dob).toLocaleDateString("en-US");
       await updateUserDetail(user.uid, "phoneNumber", formData.phoneNumber);
       await updateUserDetail(user.uid, "address", formData.address);
       await updateUserDetail(user.uid, "sex", formData.sex);
@@ -116,6 +125,32 @@ const Profile = () => {
     }
   };
 
+  const [userOrders, setUserOrders] = useState([]);
+
+  useEffect(() => {
+    const fetchUserOrders = async () => {
+      if (user) {
+        const userOrdersRef = collection(firestore, `users/${user.uid}/orders`);
+        const ordersQuery = query(userOrdersRef, orderBy("date", "desc"));
+
+        try {
+          const ordersSnapshot = await getDocs(ordersQuery);
+          const ordersData = [];
+
+          ordersSnapshot.forEach((doc) => {
+            ordersData.push({ id: doc.id, ...doc.data() });
+          });
+
+          setUserOrders(ordersData);
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+        }
+      }
+    };
+
+    fetchUserOrders();
+  }, [user]);
+
   return (
     <div>
       {user ? (
@@ -146,18 +181,18 @@ const Profile = () => {
 
             <div className="flex flex-col items-center">
               <div className="pb-2 max-w-screen-xl mx-auto pt-10 text-xl font-titleFont">
-                <strong>Account Name: </strong>
+                <strong className="flex justify-center">Account Name: </strong>
                 {user.displayName}
               </div>
               <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
-                <strong>Email: </strong>
+                <strong className="flex justify-center">Email: </strong>
                 {user.email}
               </div>
-              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
-                <strong>Phone Number: </strong>
+              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont text-center">
+                <strong className="flex justify-center">Phone Number: </strong>
                 {editMode ? (
                   <input
-                    className={`border-2 border-gray-400 ${
+                    className={`text-center border-2 border-gray-400 ${
                       phoneNumberError ? "border-red-500" : ""
                     }`}
                     type="text"
@@ -173,10 +208,10 @@ const Profile = () => {
                 )}
               </div>
               <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
-                <strong>Address: </strong>
+                <strong className="flex justify-center">Address: </strong>
                 {editMode ? (
                   <input
-                    className="border-2 border-gray-400"
+                    className="text-center border-2 border-gray-400"
                     type="text"
                     name="address"
                     value={formData.address}
@@ -187,7 +222,7 @@ const Profile = () => {
                 )}
               </div>
               <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
-                <strong>Sex: </strong>
+                <strong className="flex justify-center">Sex: </strong>
                 {editMode ? (
                   <select
                     className="border-2 border-gray-400"
@@ -195,16 +230,16 @@ const Profile = () => {
                     value={formData.sex}
                     onChange={handleInputChange}
                   >
+                    <option value="N/A">N/A</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-                    <option value="N/A">N/A</option>
                   </select>
                 ) : (
                   formData.sex || "N/A"
                 )}
               </div>
-              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
-                <strong>Date of Birth: </strong>
+              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont text-center">
+                <strong className="flex justify-center">Date of Birth: </strong>
                 {editMode ? (
                   <input
                     className="border-2 border-gray-400"
@@ -220,17 +255,17 @@ const Profile = () => {
 
               {editMode ? (
                 <button
-                  className="bg-red-500 text-white py-2 px-3 active:bg-red-500 hover:bg-red-400 rounded"
+                  className="bg-black text-white py-2 px-3  active:bg-black hover:bg-gray-800 rounded"
                   onClick={handleSaveClick}
                 >
                   Save
                 </button>
               ) : (
                 <button
-                  className="bg-red-500 text-white py-2 px-3 active:bg-red-500 hover:bg-red-400 rounded"
+                  className="bg-black text-white py-2 px-3  active:bg-black hover:bg-gray-800 rounded"
                   onClick={handleEditClick}
                 >
-                  Edit
+                  Edit Profile
                 </button>
               )}
             </div>
@@ -238,6 +273,17 @@ const Profile = () => {
           <h2 className="max-w-screen-xl mx-auto text-3xl py-10 font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
             Orders
           </h2>
+          <div className="max-h-96 overflow-y-auto border-2 border-gray-400">
+            {userOrders.length > 0 ? (
+              <div>
+                {userOrders.map((order) => (
+                  <Order key={order.id} order={order} />
+                ))}
+              </div>
+            ) : (
+              <p>No orders found.</p>
+            )}
+          </div>
         </div>
       ) : (
         <div className="max-w-screen-xl mx-auto py-20 items-center flex flex-col justify-center">
@@ -246,6 +292,7 @@ const Profile = () => {
           </p>
         </div>
       )}
+      <ToastContainer position="top-right" autoClose={5000} theme="light" />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-// Header.js
 import React, { useState, useEffect } from "react";
 import { Cart, Logo } from "../assets/index";
 import { Link } from "react-router-dom";

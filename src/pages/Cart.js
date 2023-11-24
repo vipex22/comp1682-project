@@ -1,12 +1,11 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CartItem from "../components/CartItem";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Cart2 } from "../assets/index";
 import { auth, firestore } from "../firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
@@ -16,6 +15,7 @@ const Cart = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
   const [payWithStripe, setPayWithStripe] = useState(false);
+
   useEffect(() => {
     const getUserDetails = async () => {
       if (auth.currentUser) {
@@ -38,9 +38,10 @@ const Cart = () => {
 
     getUserDetails();
   }, []);
+
   const productData = useSelector((state) => state.Cart.productData);
-  console.log("product amount: ", productData.length);
   const [totalPrice, setTotalPrice] = useState();
+
   useEffect(() => {
     let total = 0;
     productData.map((item) => {
@@ -50,10 +51,27 @@ const Cart = () => {
     setTotalPrice(total.toFixed(2));
   }, [productData]);
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     const user = auth.currentUser;
+
     if (user) {
-      setPayWithStripe(true);
+      try {
+        const orderRef = await addDoc(collection(firestore, `users/${user.uid}/orders`), {
+          date: serverTimestamp(),
+          products: productData.map((item) => ({
+            productTitle: item.productTitle,
+            quantity: item.productQuantity,
+            price: item.productPrice,
+            totalPrice: item.productPrice * item.productQuantity,
+          })),
+          statusPayment: "Pending",
+        });
+
+        setPayWithStripe(true);
+
+      } catch (error) {
+        console.error("Error creating order:", error);
+      }
     } else {
       toast.error("Please sign in to purchase");
     }

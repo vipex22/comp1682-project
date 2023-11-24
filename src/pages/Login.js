@@ -15,7 +15,6 @@ const Login = () => {
 
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log(result.user);
       navigate('/');
     } catch (error) {
       console.error('Error signing in with Google:', error);
