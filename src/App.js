@@ -8,13 +8,15 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import AllProduct from "./pages/AllProduct";
-
+import AdminLogin from "./pages/AdminLogin";
+import ManageOrders from "./pages/ManageOrders";
 import {
   createBrowserRouter,
   Outlet,
   RouterProvider,
   ScrollRestoration,
 } from "react-router-dom";
+
 
 const Layout = () => {
   return (
@@ -49,12 +51,20 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path:"/adminlogin",
+        element: <AdminLogin />,
+      },
+      {
         path: "/profile",
         element: <Profile />,
       },
       {
         path: "/products",
         element: <AllProduct />,
+      },
+      {
+        path:"/manageorders",
+        element: <ManageOrders />,
       },
       {
         path: "/contact",

@@ -13,6 +13,8 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import Order from "../components/Order";
+import { Cart2 } from "../assets/index";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ const Profile = () => {
     sex: "",
     dob: "",
   });
+  
   const formatDateForDisplay = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -207,7 +210,7 @@ const Profile = () => {
                   <p className="text-red-500 text-sm">{phoneNumberError}</p>
                 )}
               </div>
-              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
+              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont text-center">
                 <strong className="flex justify-center">Address: </strong>
                 {editMode ? (
                   <input
@@ -281,7 +284,18 @@ const Profile = () => {
                 ))}
               </div>
             ) : (
-              <p>No orders found.</p>
+              <div className="max-w-screen-xl mx-auto items-center flex flex-col justify-center">
+                <img className="w-28 mt-10" src={Cart2} alt="cartImg"></img>
+                <p className="text-2xl font-semibold font-titleFont text-gray-300 mt-10">
+                  Your order is empty
+                </p>
+                <Link
+                  className="w-60 text-base text-center font-titleFont bg-red-500 text-white py-3 px-3 mt-7 mb-10 active:bg-red-500 hover:bg-red-400"
+                  to={"/"}
+                >
+                  Shop Now
+                </Link>
+              </div>
             )}
           </div>
         </div>

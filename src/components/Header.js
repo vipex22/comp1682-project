@@ -29,6 +29,11 @@ const Header = () => {
                 Products
               </li>
             </Link>
+            <Link to="/manageorders">
+                <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
+                  Manage
+                </li>
+              </Link>
           </ul>
         </div>
         <div>
