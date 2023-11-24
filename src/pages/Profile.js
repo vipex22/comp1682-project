@@ -27,7 +27,7 @@ const Profile = () => {
     sex: "",
     dob: "",
   });
-  
+
   const formatDateForDisplay = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {

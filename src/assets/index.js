@@ -9,5 +9,6 @@ import Cart2 from "./trolley.png";
 import GoogleIcon from "./GOOG-0ed88f7c.png";
 import ShopVerticalImg from "./shopping-vertical-background_23-2150409467.avif";
 import AdminIcon from "./administrator.png";
+import NotFoundImage from "./cancelled.png";
 
-export { Logo, Cart, UserAvatar, Banner1, Banner2, Banner3, GWlogo, Cart2, GoogleIcon, ShopVerticalImg, AdminIcon };
+export { Logo, Cart, UserAvatar, Banner1, Banner2, Banner3, GWlogo, Cart2, GoogleIcon, ShopVerticalImg, AdminIcon, NotFoundImage };

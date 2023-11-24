@@ -56,7 +56,7 @@ const Cart = () => {
 
     if (user) {
       try {
-        const orderRef = await addDoc(collection(firestore, `users/${user.uid}/orders`), {
+        await addDoc(collection(firestore, `users/${user.uid}/orders`), {
           date: serverTimestamp(),
           products: productData.map((item) => ({
             productTitle: item.productTitle,

@@ -10,8 +10,10 @@ import Profile from "./pages/Profile";
 import AllProduct from "./pages/AllProduct";
 import AdminLogin from "./pages/AdminLogin";
 import ManageOrders from "./pages/ManageOrders";
+import NotFound from "./pages/NotFound";
 import {
   createBrowserRouter,
+  Navigate,
   Outlet,
   RouterProvider,
   ScrollRestoration,
@@ -70,6 +72,14 @@ const router = createBrowserRouter([
         path: "/contact",
         element: <Contact />,
       },
+      {
+        path: "/404",
+        element: <NotFound />,
+      },
+      {
+        path:"*",
+        element: <Navigate to="/404"/>,
+      }
     ],
   },
 ]);
