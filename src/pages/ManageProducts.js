@@ -270,7 +270,7 @@ const ManageProducts = () => {
         <div className="max-w-screen-xl mx-auto py-10">
           <div className="flex">
             <h2 className="mr-auto text-3xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
-              Manage Products
+              Manage Products ({products.length}) items
             </h2>
             <button
               className="w-1/8 bg-green-500 text-white py-2 px-3 active:bg-green-500 hover:bg-green-400 rounded "

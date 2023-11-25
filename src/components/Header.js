@@ -58,7 +58,7 @@ const Header = () => {
             {isAdmin && (
               <Link to="/manageorders">
                 <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
-                  Manage
+                  Orders
                 </li>
               </Link>
             )}
@@ -66,6 +66,13 @@ const Header = () => {
               <Link to="/manageproducts">
                 <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
                  Products
+                </li>
+              </Link>
+            )}
+            {isAdmin && (
+              <Link to="/dashboard">
+                <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
+                 Dashboard
                 </li>
               </Link>
             )}

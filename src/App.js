@@ -11,6 +11,7 @@ import AllProduct from "./pages/AllProduct";
 import AdminLogin from "./pages/AdminLogin";
 import ManageOrders from "./pages/ManageOrders";
 import NotFound from "./pages/NotFound";
+import DashBoard from "./pages/DashBoard";
 import {
   createBrowserRouter,
   Navigate,
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "/manageproducts",
         element: <ManageProducts />,
+      },
+      {
+        path: "/dashboard",
+        element: <DashBoard />,
       },
       {
         path: "/contact",

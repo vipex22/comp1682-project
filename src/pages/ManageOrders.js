@@ -60,21 +60,23 @@ const ManageOrders = () => {
   useEffect(() => {
     const fetchAllOrders = async () => {
       const ordersRef = collection(firestore, "allOrders");
-
+  
       try {
         const ordersSnapshot = await getDocs(ordersRef);
         const ordersData = [];
-
+  
         ordersSnapshot.forEach((doc) => {
           ordersData.push({ id: doc.id, ...doc.data() });
         });
-
+  
+        ordersData.sort((a, b) => b.date - a.date);
+  
         setAllOrders(ordersData);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
     };
-
+  
     fetchAllOrders();
   }, []);
 
@@ -143,7 +145,7 @@ const ManageOrders = () => {
                 </tr>
               </thead>
               <tbody>
-                {allOrders.map((order) => (
+              {allOrders.map((order) => (
                   <tr key={order.id}>
                     <td className="border px-4 py-2 w-40 text-center">
                       {order.userEmail}

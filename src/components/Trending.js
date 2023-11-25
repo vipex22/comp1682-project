@@ -17,7 +17,7 @@ const Products = () => {
         }));
         const shuffledProducts = productsData.sort(() => Math.random() - 0.5);
         //can change slice to how many products I want on trending
-        const selectedProducts = shuffledProducts.slice(0, 4);
+        const selectedProducts = shuffledProducts.slice(0, 8);
 
         setProducts(selectedProducts);
       } catch (error) {
@@ -28,7 +28,7 @@ const Products = () => {
   }, []);
 
   return (
-    <div className="pt-10">
+    <div className="py-10">
       <div className="max-w-screen-xl mx-auto text-7xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
         TRENDING
       </div>
