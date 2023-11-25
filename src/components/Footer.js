@@ -9,8 +9,12 @@ const Footer = () => {
         <div className="flex flex-col gap-4 md:w-3/4 md:pr-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pl-2">
             <div className="text-sm flex gap-4 pl-2">
-              <p className="hover:text-gray-300">Privacy Policy</p>
-              <p className="hover:text-gray-300">Terms of Service</p>
+              <p className="hover:text-gray-300">
+                <Link to="/privacypolicy">Privacy Policy</Link>
+              </p>
+              <p className="hover:text-gray-300">
+                <Link to="/termofservice">Terms of Service</Link>
+              </p>
               <p className="hover:text-gray-300">
                 <Link to="/contact">Contact</Link>
               </p>

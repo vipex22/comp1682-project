@@ -7,7 +7,7 @@ import { AdminIcon } from "../assets";
 const ManageUsers = () => {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [usersData, setUsersData] = useState([]); // State to store users data
+  const [usersData, setUsersData] = useState([]); 
   const navigate = useNavigate();
 
   const getUserDetail = async (uid, field) => {
@@ -56,8 +56,6 @@ const ManageUsers = () => {
       try {
         const usersCollectionRef = collection(firestore, "users");
         const usersSnapshot = await getDocs(usersCollectionRef);
-
-        // Extract user data from each document
         const usersData = usersSnapshot.docs.map((userDoc) => ({
           id: userDoc.id,
           ...userDoc.data(),

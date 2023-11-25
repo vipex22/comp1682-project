@@ -37,7 +37,6 @@ const Header = () => {
       if (user) {
         const isAdminValue = await getUserDetail(user.uid, "isAdmin");
         setIsAdmin(isAdminValue === true);
-        console.log("isAdmin:", isAdminValue);
       } else {
         setIsAdmin(false);
       }

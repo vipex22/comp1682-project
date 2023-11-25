@@ -12,6 +12,8 @@ import AdminLogin from "./pages/AdminLogin";
 import ManageOrders from "./pages/ManageOrders";
 import NotFound from "./pages/NotFound";
 import DashBoard from "./pages/DashBoard";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermOfService from "./pages/TermOfService";
 import {
   createBrowserRouter,
   Navigate,
@@ -81,6 +83,14 @@ const router = createBrowserRouter([
       {
         path: "/manageusers",
         element: <ManageUsers />,
+      },
+      {
+        path: "/privacypolicy",
+        element: <PrivacyPolicy />,
+      },
+      {
+        path: "/termofservice",
+        element: <TermOfService />,
       },
       {
         path: "/contact",

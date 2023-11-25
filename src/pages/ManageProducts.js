@@ -228,7 +228,7 @@ const ManageProducts = () => {
     );
   };
 
-  //Edit product
+
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -236,9 +236,7 @@ const ManageProducts = () => {
     setSelectedProduct(product);
     setEditModalOpen(true);
   };
-  //
 
-  //Delete product
   const handleDeleteProduct = async (productId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this product?"
@@ -255,7 +253,6 @@ const ManageProducts = () => {
     }
   };
 
-  //showdetail
   const handleProductDetail = (product) => {
     const productId = product.id;
     navigate(`/product/${productId}`, {
@@ -265,7 +262,6 @@ const ManageProducts = () => {
     });
   };
 
-  //category filter
 
   const [selectedCategory, setSelectedCategory] = useState("");
 

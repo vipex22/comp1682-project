@@ -17,7 +17,6 @@ const EditProduct = ({ product, onClose }) => {
 
   useEffect(() => {
     if (product) {
-      console.log("Setting initial values:", product);
       setTitle(product.title || "");
       setPrice(product.price || "");
       setCategory(product.category || "");

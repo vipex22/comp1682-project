@@ -16,7 +16,7 @@ const Products = () => {
           ...doc.data(),
         }));
         const shuffledProducts = productsData.sort(() => Math.random() - 0.5);
-        //can change slice to how many products I want on trending
+
         const selectedProducts = shuffledProducts.slice(0, 8);
 
         setProducts(selectedProducts);

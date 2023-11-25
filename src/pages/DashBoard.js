@@ -51,7 +51,7 @@ const DashBoard = () => {
     return () => clearTimeout(timeoutId);
   }, [isAdmin, navigate]);
 
-  //products
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const DashBoard = () => {
     fetchProducts();
   }, []);
 
-  //users
+
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const DashBoard = () => {
     fetchUsers();
   }, []);
 
-  //orders
+
   const [allOrders, setAllOrders] = useState([]);
 
   useEffect(() => {
@@ -116,7 +116,8 @@ const DashBoard = () => {
 
     fetchAllOrders();
   }, []);
-  //TotalSales
+
+  
   const calculateTotalSales = () => {
     let totalSales = 0;
 
