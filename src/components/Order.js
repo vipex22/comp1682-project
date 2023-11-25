@@ -4,20 +4,22 @@ const Order = ({ order }) => {
   const formatDate = (timestamp) => {
     const date = new Date(timestamp.seconds * 1000);
     const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: false, 
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: false,
     };
-    return date.toLocaleDateString('en-US', options);
+    return date.toLocaleDateString("en-US", options);
   };
 
   return (
     <div className="py-2">
-      <h3 className="text-red-500 pl-2 font-semibold">{formatDate(order.date)}</h3>
+      <h3 className="text-red-500 pl-2 font-semibold">
+        {formatDate(order.date)}
+      </h3>
       <table className="table-auto w-full font-titleFont border-2">
         <thead>
           <tr>
@@ -31,11 +33,21 @@ const Order = ({ order }) => {
         <tbody>
           {order.products.map((product, index) => (
             <tr key={index}>
-              <td className="border px-4 py-2 w-80 text-center">{product.productTitle}</td>
-              <td className="border px-4 py-2 w-30 text-center">{product.quantity}</td>
-              <td className="border px-4 py-2 w-80 text-center">${product.price}</td>
-              <td className="border px-4 py-2 w-80 text-center">${product.totalPrice}</td>
-              <td className="border px-4 py-2 w-80 text-center">{order.statusPayment}</td>
+              <td className="border px-4 py-2 w-80 text-center">
+                {product.productTitle}
+              </td>
+              <td className="border px-4 py-2 w-30 text-center">
+                {product.quantity}
+              </td>
+              <td className="border px-4 py-2 w-80 text-center">
+                ${product.price}
+              </td>
+              <td className="border px-4 py-2 w-80 text-center">
+                ${product.totalPrice}
+              </td>
+              <td className="border px-4 py-2 w-80 text-center">
+                {order.statusPayment}
+              </td>
             </tr>
           ))}
         </tbody>

@@ -5,7 +5,14 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Cart2 } from "../assets/index";
 import { auth, firestore } from "../firebase";
-import { doc, getDoc, addDoc, collection, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { toast } from "react-toastify";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
@@ -51,77 +58,79 @@ const Cart = () => {
     setTotalPrice(total.toFixed(2));
   }, [productData]);
 
-const handleCheckout = async () => {
-  const user = auth.currentUser;
-
-  if (user) {
-    try {
-      setPayWithStripe(true);
-    } catch (error) {
-      console.error("Error creating order:", error);
-    }
-  } else {
-    toast.error("Please sign in to purchase");
-  }
-};
-
-const stripeToken = async (token) => {
-  try {
+  const handleCheckout = async () => {
     const user = auth.currentUser;
 
     if (user) {
-      const paymentDetails = {
-        amount: totalPrice * 100,
-        token: token,
-        userEmail: userEmail,
-        userPhoneNumber: userPhoneNumber,
-        userAddress: userAddress,
-        products: productData
-          .map((item) => `${item.productTitle} (${item.productQuantity})`)
-          .join(", "),
-      };
-      await axios.post("http://localhost:8000/paywithstripe", paymentDetails);
-
-      const userOrderRef = await addDoc(collection(firestore, `users/${user.uid}/orders`), {
-        orderId: "",
-        date: serverTimestamp(),
-        products: productData.map((item) => ({
-          productTitle: item.productTitle,
-          quantity: item.productQuantity,
-          price: item.productPrice,
-          totalPrice: item.productPrice * item.productQuantity,
-        })),
-        statusPayment: "Pending",
-      });
-
-      const orderId = userOrderRef.id;
-      await updateDoc(userOrderRef, { orderId });
-      const orderData = {
-        orderId: orderId,
-        userId: user.uid,
-        userEmail: userEmail,
-        userPhoneNumber: userPhoneNumber,
-        userAddress: userAddress,
-        date: serverTimestamp(),
-        products: productData.map((item) => ({
-          productTitle: item.productTitle,
-          quantity: item.productQuantity,
-          price: item.productPrice,
-          totalPrice: item.productPrice * item.productQuantity,
-        })),
-        statusPayment: "Pending",
-      };
-      await addDoc(collection(firestore, "allOrders"), orderData);
-    
-      setPayWithStripe(true);
+      try {
+        setPayWithStripe(true);
+      } catch (error) {
+        console.error("Error creating order:", error);
+      }
     } else {
       toast.error("Please sign in to purchase");
     }
-  } catch (error) {
-    console.error("Error processing payment:", error);
-  }
-};
+  };
 
+  const stripeToken = async (token) => {
+    try {
+      const user = auth.currentUser;
+
+      if (user) {
+        const paymentDetails = {
+          amount: totalPrice * 100,
+          token: token,
+          userEmail: userEmail,
+          userPhoneNumber: userPhoneNumber,
+          userAddress: userAddress,
+          products: productData
+            .map((item) => `${item.productTitle} (${item.productQuantity})`)
+            .join(", "),
+        };
+        await axios.post("http://localhost:8000/paywithstripe", paymentDetails);
+
+        const userOrderRef = await addDoc(
+          collection(firestore, `users/${user.uid}/orders`),
+          {
+            orderId: "",
+            date: serverTimestamp(),
+            products: productData.map((item) => ({
+              productTitle: item.productTitle,
+              quantity: item.productQuantity,
+              price: item.productPrice,
+              totalPrice: item.productPrice * item.productQuantity,
+            })),
+            statusPayment: "Pending",
+          }
+        );
+
+        const orderId = userOrderRef.id;
+        await updateDoc(userOrderRef, { orderId });
+        const orderData = {
+          orderId: orderId,
+          userId: user.uid,
+          userEmail: userEmail,
+          userPhoneNumber: userPhoneNumber,
+          userAddress: userAddress,
+          date: serverTimestamp(),
+          products: productData.map((item) => ({
+            productTitle: item.productTitle,
+            quantity: item.productQuantity,
+            price: item.productPrice,
+            totalPrice: item.productPrice * item.productQuantity,
+          })),
+          statusPayment: "Pending",
+        };
+        await addDoc(collection(firestore, "allOrders"), orderData);
+
+        setPayWithStripe(true);
+      } else {
+        toast.error("Please sign in to purchase");
+      }
+    } catch (error) {
+      console.error("Error processing payment:", error);
+    }
+  };
 
   const renderProduct = () => {
     if (productData.length === 0) {

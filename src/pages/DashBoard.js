@@ -1,12 +1,7 @@
-import React, { useState, useEffect, Children } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore } from "../firebase";
-import {
-  doc,
-  getDoc,
-  getDocs,
-  collection,
-} from "firebase/firestore";
+import { doc, getDoc, getDocs, collection } from "firebase/firestore";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { LuShoppingBag } from "react-icons/lu";
 import TransactionChart from "../components/TransactionChart";
@@ -77,7 +72,7 @@ const DashBoard = () => {
     fetchProducts();
   }, []);
 
-//users
+  //users
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -121,7 +116,7 @@ const DashBoard = () => {
 
     fetchAllOrders();
   }, []);
-//TotalSales
+  //TotalSales
   const calculateTotalSales = () => {
     let totalSales = 0;
 
@@ -137,11 +132,11 @@ const DashBoard = () => {
     <div className="min-h-[650px]">
       {isAdmin && (
         <div className="max-w-screen-xl mx-auto py-10">
-          <h2 className="max-w-screen-xl mx-auto text-3xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
+          <h2 className="max-w-screen-xl mx-auto text-3xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)] pl-2">
             DashBoard
           </h2>
           <div className="max-h-96 my-10 min-h-[650px]">
-            <div className="flex gap-4 w-full ">
+            <div className="flex flex-wrap gap-4 w-full ">
               <Box>
                 <div className="rounded-full h-12 w-12 flex items-center justify-center bg-sky-500">
                   <FcMoneyTransfer className="text-2xl text-white" />
@@ -152,7 +147,7 @@ const DashBoard = () => {
                   </span>
                   <div className="flex items-center">
                     <strong className="text-xl text-gray-700 font-titleFont">
-                    ${calculateTotalSales().toFixed(2)}
+                      ${calculateTotalSales().toFixed(2)}
                     </strong>
                   </div>
                 </div>
@@ -204,10 +199,9 @@ const DashBoard = () => {
               </Box>
             </div>
             <div className="flex flex-row gap-4 w-full pt-10">
-            <TransactionChart/>
-            <CustomerGender/>
+              <TransactionChart />
+              <CustomerGender />
             </div>
-            
           </div>
         </div>
       )}

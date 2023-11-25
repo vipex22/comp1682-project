@@ -20,6 +20,7 @@ import {
   ScrollRestoration,
 } from "react-router-dom";
 import ManageProducts from "./pages/ManageProducts";
+import ManageUsers from "./pages/ManageUsers";
 
 const Layout = () => {
   return (
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <DashBoard />,
+      },
+      {
+        path: "/manageusers",
+        element: <ManageUsers />,
       },
       {
         path: "/contact",

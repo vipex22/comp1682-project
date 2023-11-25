@@ -15,10 +15,10 @@ const ProductItem = ({ product }) => {
     <div className="group border-[1px] mx-4 my-4">
       <div
         onClick={showDetail}
-        className="w-full h-80 cursor-pointer overflow-hidden "
+        className="w-full h-50 cursor-pointer overflow-hidden md:h-80 lg:h-100"
       >
         <img
-          className="w-30 h-30 px-4 py-4 object-cover group-hover:scale-110 duration-75"
+          className="w-30 h-30 px-4 py-4 mx-auto object-cover group-hover:scale-110 duration-75 "
           src={product.image}
           alt="productimage"
         ></img>

@@ -159,7 +159,7 @@ const Profile = () => {
     <div>
       {user ? (
         <div className="max-w-screen-xl mx-auto py-10">
-          <h2 className="max-w-screen-xl mx-auto text-3xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
+          <h2 className="max-w-screen-xl mx-auto text-3xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)] pl-2">
             Profile Details
           </h2>
 
@@ -274,7 +274,7 @@ const Profile = () => {
               )}
             </div>
           </div>
-          <h2 className="max-w-screen-xl mx-auto text-3xl py-10 font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
+          <h2 className="max-w-screen-xl mx-auto text-3xl py-10 font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)] pl-2">
             Orders
           </h2>
           <div className="max-h-96 overflow-y-auto border-2 border-gray-400">

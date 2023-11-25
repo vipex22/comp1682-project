@@ -1,20 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { collection, getDocs } from 'firebase/firestore';
-import { firestore } from '../firebase';
+import React, { useState, useEffect } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { collection, getDocs } from "firebase/firestore";
+import { firestore } from "../firebase";
 
 export default function TransactionChart() {
   const [allOrders, setAllOrders] = useState([]);
 
   useEffect(() => {
     const fetchAllOrders = async () => {
-      const ordersRef = collection(firestore, 'allOrders');
+      const ordersRef = collection(firestore, "allOrders");
       try {
         const ordersSnapshot = await getDocs(ordersRef);
-        const ordersData = ordersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const ordersData = ordersSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setAllOrders(ordersData);
       } catch (error) {
-        console.error('Error fetching orders:', error);
+        console.error("Error fetching orders:", error);
       }
     };
 
@@ -24,12 +36,12 @@ export default function TransactionChart() {
   const calculateTotalPriceByDate = () => {
     const totalPriceByDate = {};
 
-    allOrders.forEach(order => {
+    allOrders.forEach((order) => {
       const orderDate = new Date(order.date.toDate());
       const formattedDate = orderDate.toLocaleDateString();
 
       let totalPrice = 0;
-      order.products.forEach(product => {
+      order.products.forEach((product) => {
         totalPrice += parseFloat(product.totalPrice);
       });
 
@@ -40,9 +52,9 @@ export default function TransactionChart() {
       }
     });
 
-    return Object.keys(totalPriceByDate).map(date => ({
+    return Object.keys(totalPriceByDate).map((date) => ({
       date,
-      Income: totalPriceByDate[date]
+      Income: totalPriceByDate[date],
     }));
   };
 
@@ -61,7 +73,7 @@ export default function TransactionChart() {
               top: 20,
               right: 10,
               left: -10,
-              bottom: 0
+              bottom: 0,
             }}
           >
             <CartesianGrid strokeDasharray="3 3 0 0" vertical={false} />

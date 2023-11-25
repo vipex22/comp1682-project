@@ -29,10 +29,10 @@ const Products = () => {
 
   return (
     <div className="py-10">
-      <div className="max-w-screen-xl mx-auto text-7xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
+      <div className="max-w-screen-xl mx-auto text-5xl md:text-7xl lg:text-7xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)] text-center">
         TRENDING
       </div>
-      <div className="pt-10 max-w-screen-xl mx-auto grid grid-cols-4">
+      <div className="pt-10 max-w-screen-xl mx-auto grid lg:grid-cols-4 grid-cols-2">
         {products.map((item) => (
           <ProductItem key={item.id} product={item} />
         ))}

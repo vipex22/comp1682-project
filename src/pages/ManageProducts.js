@@ -264,32 +264,63 @@ const ManageProducts = () => {
       },
     });
   };
+
+  //category filter
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  const filteredProducts = selectedCategory
+    ? products.filter((product) => product.category === selectedCategory)
+    : products;
+
   return (
     <div className="min-h-[650px]">
       {isAdmin && (
         <div className="max-w-screen-xl mx-auto py-10">
           <div className="flex">
-            <h2 className="mr-auto text-3xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)]">
+            <h2 className="mr-auto text-3xl font-bold font-titleFont drop-shadow-[3px_3px_3px_rgba(255,0,0)] pl-2">
               Manage Products ({products.length}) items
             </h2>
+            
+          </div>
+
+          <div className="my-8 pl-2">
+            <select
+              className="p-2 border border-gray-300 rounded-lg w-48 mr-2"
+              onChange={handleCategoryChange}
+              value={selectedCategory}
+            >
+              <option value="">All Categories</option>
+              <option value="Shirt">Shirt</option>
+              <option value="Pant">Pant</option>
+              <option value="Hat">Hat</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Hoodie">Hoodie</option>
+              <option value="Bag">Bag</option>
+            </select>
             <button
-              className="w-1/8 bg-green-500 text-white py-2 px-3 active:bg-green-500 hover:bg-green-400 rounded "
+              className="w-1/8 bg-green-500 text-white py-2 px-3 active:bg-green-500 hover:bg-green-400 rounded mt-4"
               onClick={() => setCreateModalOpen(true)}
             >
               Create Product
             </button>
           </div>
+
           <div className="max-h-96 my-10 min-h-[650px] overflow-y-auto border-2 border-gray-400">
-            {products.length === 0 ? (
+            {filteredProducts.length === 0 ? (
               <div className="max-w-screen-xl mx-auto py-20 items-center flex flex-col justify-center">
                 <img className="w-28 mt-36" src={AdminIcon} alt="cartImg"></img>
                 <p className="text-2xl font-semibold font-titleFont text-gray-300 mt-10">
-                  No order has been made!
+                  No products has been made!
                 </p>
               </div>
             ) : (
-              <table className="table-auto w-full font-titleFont border-2">
-                <thead>
+              <table className="table-auto w-full font-titleFont">
+                <thead className="sticky top-0">
                   <tr>
                     <th className="border px-4 py-2 bg-gray-200">Image</th>
                     <th className="border px-4 py-2 bg-gray-200">Title</th>
@@ -302,7 +333,7 @@ const ManageProducts = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((product) => (
+                  {filteredProducts.map((product) => (
                     <tr key={product.id}>
                       <td className="border px-4 py-2 w-40 text-center">
                         <img

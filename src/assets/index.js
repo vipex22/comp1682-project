@@ -11,4 +11,17 @@ import ShopVerticalImg from "./shopping-vertical-background_23-2150409467.avif";
 import AdminIcon from "./administrator.png";
 import NotFoundImage from "./cancelled.png";
 
-export { Logo, Cart, UserAvatar, Banner1, Banner2, Banner3, GWlogo, Cart2, GoogleIcon, ShopVerticalImg, AdminIcon, NotFoundImage };
+export {
+  Logo,
+  Cart,
+  UserAvatar,
+  Banner1,
+  Banner2,
+  Banner3,
+  GWlogo,
+  Cart2,
+  GoogleIcon,
+  ShopVerticalImg,
+  AdminIcon,
+  NotFoundImage,
+};

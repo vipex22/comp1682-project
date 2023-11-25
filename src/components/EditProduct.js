@@ -7,8 +7,12 @@ import { toast } from "react-toastify";
 const EditProduct = ({ product, onClose }) => {
   const [title, setTitle] = useState(product ? product.title || "" : "");
   const [price, setPrice] = useState(product ? product.price || "" : "");
-  const [category, setCategory] = useState(product ? product.category || "" : "");
-  const [description, setDescription] = useState(product ? product.description || "" : "");
+  const [category, setCategory] = useState(
+    product ? product.category || "" : ""
+  );
+  const [description, setDescription] = useState(
+    product ? product.description || "" : ""
+  );
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -20,7 +24,7 @@ const EditProduct = ({ product, onClose }) => {
       setDescription(product.description || "");
     }
   }, [product]);
-  
+
   const handleEditProduct = async () => {
     try {
       if (title && price && category && description) {

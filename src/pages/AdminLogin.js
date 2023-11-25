@@ -18,10 +18,10 @@ const AdminLogin = () => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const userRef = doc(firestore, "users", result.user.uid);
-    await setDoc(userRef, { isAdmin: true }, { merge: true });
+      await setDoc(userRef, { isAdmin: true, email: email }, { merge: true });
       navigate("/");
     } catch (error) {
-      toast.error("Incorrect admin credentials!")
+      toast.error("Incorrect admin credentials!");
     }
   };
 
@@ -33,8 +33,16 @@ const AdminLogin = () => {
     }));
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleAdminSignIn();
+    }
+  };
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-300 font-titleFont">
+    <div
+      className="flex items-center justify-center min-h-screen bg-gray-300 font-titleFont"
+      onKeyDown={handleKeyPress}
+    >
       <div className="relative flex flex-col m-6 space-y-8 bg-white rounded-2xl md:flex-row md:space-y-0">
         <div className="flex flex-col justify-center p-8 md:p-14">
           <span className="text-4xl font-bold mb-3 ">Admin Login</span>

@@ -9,44 +9,43 @@ const ProductDetail = () => {
   const Location = useLocation();
   useEffect(() => {
     setDetails(Location.state.items);
-  }, []);
+  }, [Location.state.items]);
   const Dispatch = useDispatch();
   let [Quantity, setQuantity] = useState(1);
+
   return (
-    <div>
-      <div className="max-w-screen-xl mx-auto flex my-10 gap-10">
-        <div className="w-2/5">
+    <div className="max-w-screen-xl mx-auto my-10 p-4 md:p-8">
+      <div className="md:flex items-center">
+        <div className="md:w-2/5 mb-4 md:mb-0">
           <img
-            className="h-[550px] px-10 py-10 object-cover "
+            className="w-full h-auto md:h-[550px] object-cover"
             src={details.image}
             alt="ProductImage"
           ></img>
         </div>
 
-        <div className="w-3/5">
-          <div>
-            <h2 className="text-4xl font-semibold font-titleFont">
-              {details.title}
-            </h2>
-            <div className="py-5">
-              <p className="text-2xl font-bold font-titleFont">
-                ${details.price}
-              </p>
-            </div>
+        <div className="md:w-3/5 md:pl-8">
+          <h2 className="text-2xl md:text-4xl font-semibold font-titleFont mb-2">
+            {details.title}
+          </h2>
+          <div className="mb-4">
+            <p className="text-xl md:text-2xl font-bold font-titleFont">
+              ${details.price}
+            </p>
           </div>
-          <h2 className="py-5 text-2xl">Details</h2>
-          <p className="font-bold font-titleFont">
-            Category: {details.category}
-          </p>
-          <p className="text-sm font-titleFont">{details.description}</p>
 
-          <div className="my-10 flex gap-10">
-            <div className="p-2 w-40 flex items-center justify-between border font-titleFont text-gray-600">
+          <h2 className="text-xl md:text-2xl mb-2">Details</h2>
+          <p className="text-sm md:text-base font-titleFont mb-4">
+            {details.description}
+          </p>
+
+          <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center">
+            <div className="p-2 w-40 md:w-48 flex items-center justify-between border font-titleFont text-gray-600">
               <p className="text-sm">Quantity</p>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() =>
-                    setQuantity(Quantity === 1 ? (Quantity = 1) : Quantity - 1)
+                    setQuantity(Quantity === 1 ? 1 : Quantity - 1)
                   }
                 >
                   -
