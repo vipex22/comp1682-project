@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { auth, firestore } from "../firebase";
 import {doc, getDoc } from "firebase/firestore";
-
+import { AdminIcon } from "../assets/index";
 const Header = () => {
   const productInCart = useSelector((state) => state.Cart.productData);
   const [user, setUser] = useState(null);
@@ -48,11 +48,13 @@ const Header = () => {
             <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
               <Link to={"/"}>Home</Link>
             </li>
-            <Link to="/products">
+            {!isAdmin && (
+              <Link to="/products">
               <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
                 Products
               </li>
             </Link>
+            )}
             {isAdmin && (
               <Link to="/manageorders">
                 <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
@@ -60,7 +62,13 @@ const Header = () => {
                 </li>
               </Link>
             )}
-            
+            {isAdmin && (
+              <Link to="/manageproducts">
+                <li className="text-white text-xl hover:text-gray-300 hover:underline decoration-[3px] underline-offset-8">
+                 Products
+                </li>
+              </Link>
+            )}
           </ul>
         </div>
         <div className="flex justify-center w-1/3">
@@ -82,12 +90,12 @@ const Header = () => {
           {user ? (
             <div className="flex items-center">
               <p className="text-white text-xl mr-2">
-                {user.displayName || "User"}
+                {user.displayName || "Admin"}
               </p>
               <Link to="/profile">
                 <img
                   className="w-8 h-8 rounded-full"
-                  src={user.photoURL}
+                  src={user.photoURL || AdminIcon}
                   alt="userLogo"
                 />
               </Link>

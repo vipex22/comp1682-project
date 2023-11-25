@@ -15,6 +15,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Order from "../components/Order";
 import { Cart2 } from "../assets/index";
 import { Link } from "react-router-dom";
+import { AdminIcon } from "../assets/index";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -167,11 +168,11 @@ const Profile = () => {
               <div className="items-center">
                 <img
                   className="w-40 h-40 mt-10 rounded-full border-2 border-black"
-                  src={user.photoURL}
+                  src={user.photoURL || AdminIcon}
                   alt="userLogo"
                 />
-                <p className="text-lg font-bold font-titleFont pt-3">
-                  {user.displayName}
+                <p className="text-lg font-bold font-titleFont pt-3 text-center">
+                  {user.displayName || "Admin"}
                 </p>
                 <button
                   className="bg-black text-white w-full mt-5 py-2 px-3 active:bg-black hover:bg-gray-800 rounded"
@@ -183,11 +184,11 @@ const Profile = () => {
             </div>
 
             <div className="flex flex-col items-center">
-              <div className="pb-2 max-w-screen-xl mx-auto pt-10 text-xl font-titleFont">
+              <div className="pb-2 max-w-screen-xl mx-auto pt-10 text-xl font-titleFont text-center">
                 <strong className="flex justify-center">Account Name: </strong>
-                {user.displayName}
+                {user.displayName || "Admin"}
               </div>
-              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
+              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont text-center">
                 <strong className="flex justify-center">Email: </strong>
                 {user.email}
               </div>
@@ -224,7 +225,7 @@ const Profile = () => {
                   formData.address || "N/A"
                 )}
               </div>
-              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont">
+              <div className="pb-2 max-w-screen-xl mx-auto text-xl font-titleFont text-center">
                 <strong className="flex justify-center">Sex: </strong>
                 {editMode ? (
                   <select

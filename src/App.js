@@ -18,7 +18,7 @@ import {
   RouterProvider,
   ScrollRestoration,
 } from "react-router-dom";
-
+import ManageProducts from "./pages/ManageProducts";
 
 const Layout = () => {
   return (
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path:"/adminlogin",
+        path: "/adminlogin",
         element: <AdminLogin />,
       },
       {
@@ -65,8 +65,12 @@ const router = createBrowserRouter([
         element: <AllProduct />,
       },
       {
-        path:"/manageorders",
+        path: "/manageorders",
         element: <ManageOrders />,
+      },
+      {
+        path: "/manageproducts",
+        element: <ManageProducts />,
       },
       {
         path: "/contact",
@@ -77,9 +81,9 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
       {
-        path:"*",
-        element: <Navigate to="/404"/>,
-      }
+        path: "*",
+        element: <Navigate to="/404" />,
+      },
     ],
   },
 ]);
