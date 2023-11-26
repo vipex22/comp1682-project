@@ -3,7 +3,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
 import { storage, firestore } from "../firebase";
 import { toast } from "react-toastify";
-
+import 'react-toastify/dist/ReactToastify.css';
 const EditProduct = ({ product, onClose }) => {
   const [title, setTitle] = useState(product ? product.title || "" : "");
   const [price, setPrice] = useState(product ? product.price || "" : "");

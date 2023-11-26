@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ import {
   increaseQuantity,
 } from "../redux/slice";
 import { toast } from "react-toastify";
-
+import 'react-toastify/dist/ReactToastify.css';
 const CartItem = () => {
   const productData = useSelector((state) => state.Cart.productData);
   const Dispatch = useDispatch();

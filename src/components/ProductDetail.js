@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/slice";
 import { ToastContainer, toast } from "react-toastify";
-
+import 'react-toastify/dist/ReactToastify.css';
 const ProductDetail = () => {
   const [details, setDetails] = useState({});
   const Location = useLocation();

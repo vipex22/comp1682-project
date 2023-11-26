@@ -16,6 +16,7 @@ import {
 import { toast } from "react-toastify";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Cart = () => {
   const [userAddress, setUserAddress] = useState("");

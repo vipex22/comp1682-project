@@ -181,7 +181,7 @@ const ManageOrders = () => {
                       <td className="border px-4 py-2 w-20 text-center">
                         {order.products.map((product) => (
                           <div key={product.productTitle}>
-                            ${product.totalPrice}
+                            ${product.totalPrice.toFixed(2)}
                             <br />
                           </div>
                         ))}

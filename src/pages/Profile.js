@@ -16,6 +16,7 @@ import Order from "../components/Order";
 import { Cart2 } from "../assets/index";
 import { Link } from "react-router-dom";
 import { AdminIcon } from "../assets/index";
+import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
   const navigate = useNavigate();

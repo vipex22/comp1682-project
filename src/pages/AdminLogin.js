@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import { doc, setDoc } from "firebase/firestore";
-
+import 'react-toastify/dist/ReactToastify.css';
 const AdminLogin = () => {
   const navigate = useNavigate();
   const [adminCredentials, setAdminCredentials] = useState({

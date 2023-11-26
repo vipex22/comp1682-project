@@ -7,6 +7,7 @@ import { AdminIcon } from "../assets";
 import { toast, ToastContainer } from "react-toastify";
 import EditProduct from "../components/EditProduct";
 import { onSnapshot } from "firebase/firestore";
+import 'react-toastify/dist/ReactToastify.css';
 
 const ManageProducts = () => {
   const [user, setUser] = useState(null);

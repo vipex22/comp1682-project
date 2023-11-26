@@ -43,7 +43,7 @@ const Order = ({ order }) => {
                 ${product.price}
               </td>
               <td className="border px-4 py-2 w-80 text-center">
-                ${product.totalPrice}
+                ${product.totalPrice.toFixed(2)}
               </td>
               <td className="border px-4 py-2 w-80 text-center">
                 {order.statusPayment}
