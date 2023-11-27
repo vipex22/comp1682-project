@@ -117,7 +117,7 @@ const Cart = () => {
           products: productData.map((item) => ({
             productTitle: item.productTitle,
             quantity: item.productQuantity,
-            price: item.productPrice,
+            price: item.productPrice.toFixed(2),
             totalPrice: item.productPrice * item.productQuantity,
           })),
           statusPayment: "Pending",

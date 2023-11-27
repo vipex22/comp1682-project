@@ -83,26 +83,31 @@ const ManageOrders = () => {
     try {
       const allOrdersDocRef = doc(firestore, "allOrders", allOrderId);
       const allOrdersDoc = await getDoc(allOrdersDocRef);
+  
       if (allOrdersDoc.exists()) {
         const orderIdInAllOrders = allOrdersDoc.data().orderId;
+
         await updateDoc(allOrdersDocRef, { statusPayment: newStatus });
+  
         setAllOrders((prevOrders) => {
           return prevOrders.map((order) =>
-            order.id === allOrderId
-              ? { ...order, statusPayment: newStatus }
-              : order
+            order.id === allOrderId ? { ...order, statusPayment: newStatus } : order
           );
         });
-        const userOrdersQuery = collection(
-          firestore,
-          `users/${user.uid}/orders`
-        );
+  
+        const userOrdersQuery = collection(firestore, "users");
         const userOrdersSnapshot = await getDocs(userOrdersQuery);
-        userOrdersSnapshot.forEach(async (userOrderDoc) => {
-          const userOrderData = userOrderDoc.data();
-          if (userOrderData.orderId === orderIdInAllOrders) {
-            await updateDoc(userOrderDoc.ref, { statusPayment: newStatus });
-          }
+  
+        userOrdersSnapshot.forEach(async (userDoc) => {
+          const userOrdersRef = collection(userDoc.ref, "orders");
+          const userOrdersSnapshot = await getDocs(userOrdersRef);
+  
+          userOrdersSnapshot.forEach(async (userOrderDoc) => {
+            const userOrderData = userOrderDoc.data();
+            if (userOrderData.orderId === orderIdInAllOrders) {
+              await updateDoc(userOrderDoc.ref, { statusPayment: newStatus });
+            }
+          });
         });
       } else {
         console.error("allOrders document not found!");
@@ -111,6 +116,7 @@ const ManageOrders = () => {
       console.error("Error updating order status:", error);
     }
   };
+  
 
   return (
     <div className="min-h-[650px]">
