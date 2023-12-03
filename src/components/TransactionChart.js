@@ -52,10 +52,12 @@ export default function TransactionChart() {
       }
     });
 
-    return Object.keys(totalPriceByDate).map((date) => ({
-      date,
-      Income: totalPriceByDate[date],
-    }));
+    const sortedDates = Object.keys(totalPriceByDate)
+    .map((date) => ({ date: new Date(date), Income: totalPriceByDate[date] }))
+    .sort((a, b) => a.date - b.date)
+    .map((item) => ({ date: item.date.toLocaleDateString(), Income: item.Income }));
+
+  return sortedDates;
   };
 
   const data = calculateTotalPriceByDate();
