@@ -42,8 +42,8 @@ const CartItem = () => {
                 alt="productImage"
               ></img>
             </div>
-            <h2 className="px-2 w-20 lg:w-52">{item.productTitle}</h2>
-            <p className="px-2 lg:w-10">${item.productPrice}</p>
+            <h2 className="px-2 w-20 lg:w-44">{item.productTitle}</h2>
+            <p className="px-2 lg:w-14">${item.productPrice}</p>
             <div className="p-2 w-28 lg:w-40 flex items-center justify-between border font-titleFont text-gray-600">
               <p className="pr-2 text-[12px] lg:text-sm">Quantity</p>
               <div className="text-[12px] lg:text-sm flex items-center gap-2 lg:gap-4">

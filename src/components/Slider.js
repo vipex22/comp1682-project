@@ -16,7 +16,7 @@ const Slider = () => {
   };
   return (
     <div className="w-full h-auto overflow-x-hidden">
-      <div className="w-screen h-[330px] relative md:h-[450px] lg:h-[720px]">
+      <div className="w-screen h-[320px] relative md:h-[450px] lg:h-[670px]">
         <div
           style={{ transform: `translateX(-${currentSlide * 100}vw)` }}
           className="w-[400vw] h-full flex transition-transform duration-1000"
@@ -40,7 +40,7 @@ const Slider = () => {
             loading="priority"
           ></img>
         </div>
-        <div className="absolute w-fit left-0 right-0 mx-auto flex gap-8 bottom-16">
+        <div className="absolute w-fit left-0 right-0 mx-auto flex gap-8 bottom-4 lg:bottom-16">
           <div onClick={prevSlide} className="hover:text-gray-500">
             <MdOutlineArrowBackIos />
           </div>
