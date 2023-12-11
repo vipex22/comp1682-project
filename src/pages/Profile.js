@@ -92,6 +92,7 @@ const Profile = () => {
       await updateUserDetail(user.uid, "dob", formattedDate);
 
       setEditMode(false);
+      toast.success("Edit profile successfully!");
     } catch (error) {
       console.error("Error updating user profile:", error);
     }
@@ -123,8 +124,10 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/login");
       toast.success("Log out successfully!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
     } catch (error) {
       console.error("Error signing out:", error);
     }

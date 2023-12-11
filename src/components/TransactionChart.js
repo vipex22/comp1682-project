@@ -53,7 +53,7 @@ export default function TransactionChart() {
     });
 
     const sortedDates = Object.keys(totalPriceByDate)
-    .map((date) => ({ date: new Date(date), Income: totalPriceByDate[date] }))
+    .map((date) => ({ date: new Date(date), Income: parseFloat(totalPriceByDate[date].toFixed(2)) }))
     .sort((a, b) => a.date - b.date)
     .map((item) => ({ date: item.date.toLocaleDateString(), Income: item.Income }));
 

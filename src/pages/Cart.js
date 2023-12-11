@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CartItem from "../components/CartItem";
 import { ToastContainer } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Cart2 } from "../assets/index";
 import { auth, firestore } from "../firebase";
@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
-
+import { clearCart } from "../redux/slice";
 const Cart = () => {
   const [userAddress, setUserAddress] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -63,6 +63,10 @@ const Cart = () => {
     const user = auth.currentUser;
 
     if (user) {
+      if (!userAddress || !userPhoneNumber) {
+        toast.error("Please provide address and phone number in your profile before checkout.");
+        return;
+      }
       try {
         setPayWithStripe(true);
       } catch (error) {
@@ -72,7 +76,7 @@ const Cart = () => {
       toast.error("Please sign in to purchase");
     }
   };
-
+  const Dispatch = useDispatch();
   const stripeToken = async (token) => {
     try {
       const user = auth.currentUser;
@@ -123,8 +127,12 @@ const Cart = () => {
           statusPayment: "Pending",
         };
         await addDoc(collection(firestore, "allOrders"), orderData);
-
+        
         setPayWithStripe(true);
+        toast.success("Payment successfully!");
+        setTimeout(() => {
+          Dispatch(clearCart())
+        }, 2000);
       } else {
         toast.error("Please sign in to purchase");
       }
@@ -198,7 +206,7 @@ const Cart = () => {
     );
   };
 
-  return <div>{renderProduct()}</div>;
+  return <div className="min-h-[550px]">{renderProduct()}</div>;
 };
 
 export default Cart;

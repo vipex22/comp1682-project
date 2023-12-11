@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore } from "../firebase";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
-import { AdminIcon } from "../assets";
+import EditUser from "../components/EditUser";
+import { onSnapshot } from "firebase/firestore";
+import { ToastContainer } from "react-toastify";
 
 const ManageUsers = () => {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [usersData, setUsersData] = useState([]); 
+  const [usersData, setUsersData] = useState([]);
+  const [isEditUserModalOpen, setEditUserModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const navigate = useNavigate();
 
   const getUserDetail = async (uid, field) => {
@@ -70,6 +74,31 @@ const ManageUsers = () => {
     fetchUsers();
   }, []);
 
+  const handleEditUser = (user) => {
+    setSelectedUser(user);
+    setEditUserModalOpen(true);
+  };
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(firestore, "users"), (snapshot) => {
+      const usersData = snapshot.docs.map((userDoc) => ({
+        id: userDoc.id,
+        ...userDoc.data(),
+      }));
+  
+      setUsersData(usersData);
+    });
+  
+    return () => unsubscribe();
+  }, []);
+  const formatDateForDisplay = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
   return (
     <div className="min-h-[650px]">
       {isAdmin && (
@@ -87,13 +116,14 @@ const ManageUsers = () => {
                   <th className="border px-4 py-2 bg-gray-200">Address</th>
                   <th className="border px-4 py-2 bg-gray-200">Sex</th>
                   <th className="border px-4 py-2 bg-gray-200">DoB</th>
+                  <th className="border px-4 py-2 bg-gray-200">Operation</th>
                 </tr>
               </thead>
               <tbody>
                 {usersData.map((user) => (
                   <tr key={user.id}>
                     <td className="border px-4 py-2 w-60 text-center">
-                      {user.isAdmin ? "Yes" : "No"}
+                      {user.isAdmin ? "True" : "False"}
                     </td>
                     <td className="border px-4 py-2 w-60 text-center">
                       {user.email || "N/A"}
@@ -108,7 +138,15 @@ const ManageUsers = () => {
                       {user.sex || "N/A"}
                     </td>
                     <td className="border px-4 py-2 w-40 text-center">
-                      {user.dob || "N/A"}
+                      {formatDateForDisplay(user.dob) || "N/A"}
+                    </td>
+                    <td className="border px-4 py-2 w-32 text-center">
+                      <button
+                        onClick={() => handleEditUser(user)}
+                        className="bg-blue-500 text-white py-2 px-3 active:bg-blue-500 hover:bg-blue-400 rounded mr-2"
+                      >
+                        Edit
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -117,6 +155,13 @@ const ManageUsers = () => {
           </div>
         </div>
       )}
+      {isEditUserModalOpen && (
+        <EditUser
+          user={selectedUser}
+          onClose={() => setEditUserModalOpen(false)}
+        />
+      )}
+      <ToastContainer position="top-right" autoClose={5000} theme="light" />
     </div>
   );
 };
