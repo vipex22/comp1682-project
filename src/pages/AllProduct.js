@@ -38,7 +38,7 @@ const Products = () => {
       <div className="pt-10 max-w-screen-xl mx-auto font-titleFont flex flex-col md:flex-row md:items-center md:justify-between">
         <div className="mb-4 md:mb-0 md:flex md:w-1/2 px-3">
           <select
-            className="p-2 border border-gray-300 rounded-lg w-full md:w-48"
+            className="p-2 border border-gray-300 rounded-lg w-44 md:w-48"
             onChange={handleCategoryChange}
             value={selectedCategory}
           >

@@ -159,9 +159,11 @@ const Cart = () => {
       );
     }
     return (
-      <div className="max-w-screen-xl mx-auto py-20 flex">
+      <div className="max-w-screen-xl mx-auto py-20 flex flex-col lg:flex-row">
+        <div className="lg:w-2/3">
         <CartItem />
-        <div className="w-1/3 py-6 px-4">
+      </div>
+        <div className="lg:w-1/3 lg:mt-0 mt-8 px-4">
           <div className="flex flex-col gap-6 border-b-[1px] border-b-gray-400 pb-6">
             <h2 className="text-2xl font-bold font-titleFont">Totals</h2>
             <p className="flex items-start gap-8 text-base">
