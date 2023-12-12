@@ -11,6 +11,10 @@ const ProductItem = ({ product }) => {
       },
     });
   };
+  const productTitle =
+    product.title.length > 20
+      ? product.title.substring(0, 20) + "..."
+      : product.title;
   return (
     <div className="group border-[1px] mx-4 my-4">
       <div
@@ -27,7 +31,7 @@ const ProductItem = ({ product }) => {
         <div className="flex justify-between">
           <div>
             <h2 className="text-sm font-titleFont ">
-              {product.title.substring(0, 20)}
+              {productTitle}
             </h2>
           </div>
           <div className="text-sm font-bold">
