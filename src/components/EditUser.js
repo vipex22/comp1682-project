@@ -130,14 +130,18 @@ const EditUser = ({ user, onClose }) => {
             >
               Sex
             </label>
-            <input
+            <select
               type="text"
               id="sex"
               name="sex"
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               onChange={(e) => setSex(e.target.value)}
               value={sex}
-            />
+            >
+              <option value="N/A">N/A</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
           </div>
           <div className="mb-4">
             <label
